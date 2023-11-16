@@ -27,11 +27,8 @@ You will be prompted to enter your project name and choose your tech stacks. The
 
 Example prompts:
 
-> ? Project Name: my-project
-> ? Use TypeScript? Yes
-> ? Select Frontend Framework React
-> ? Select Backend Framework Express
-> ? Select Database MongoDB
+ ![image](https://github.com/jovanshelomo/dock-cd/assets/15062364/e0a8d9ff-830f-4c82-83c0-b124d7b57e2a)
+
 
 ## After Project Generation
 
