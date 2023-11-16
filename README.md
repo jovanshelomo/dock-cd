@@ -108,7 +108,7 @@ $ docker-compose up -d --build
 The frontend will be served as static files from the backend and will be exposed in the default port, **3000**. If you want to serve it in another port, you can change the port from the `.env` file.
 
 > [!WARNING]
-> ⚠️ **WARNING!** Before actually deploying it to the server, you need to change the database password both in the `.env` and `backend/.env` file.
+> Before actually deploying it to the server, you need to change the database password both in the `.env` and `backend/.env` file.
 
 ## Tech Stacks
 
