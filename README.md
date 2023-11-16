@@ -125,3 +125,6 @@ The frontend will be served as static files from the backend and will be exposed
 - Containerization
   - [Docker](https://www.docker.com/)
   - [Docker Compose](https://docs.docker.com/compose/)
+
+---
+Made with ♥️ By Jovan Shelomo
