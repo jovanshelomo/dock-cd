@@ -1,0 +1,17 @@
+version: "3.8"
+name: "my-project"
+services:
+  db:
+    ##DATABASE##
+
+  app:
+    build:
+      context: .
+    ports:
+      - "${APP_PORT}:3000"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  dockcd:
