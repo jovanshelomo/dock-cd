@@ -25,15 +25,13 @@ $ npx dock-cd@latest
 
 You will be prompted to enter your project name and choose your tech stacks. Then, the project will be generated automatically in the current directory.
 
-<style>
-r { color: Red }
-b { color: deepskyblue }
-g { color: limegreen }
-</style>
-
 Example prompts:
 
-> <code style="color:inherit"><g>?</g> Project Name: my-project<br/> <g>?</g> Use TypeScript? <b>Yes</b><br/> <g>?</g> Select Frontend Framework <b>React</b><br/> <g>?</g> Select Backend Framework <b>Express</b><br/> <g>?</g> Select Database <b>MongoDB</b></code>
+> ? Project Name: my-project
+> ? Use TypeScript? Yes
+> ? Select Frontend Framework React
+> ? Select Backend Framework Express
+> ? Select Database MongoDB
 
 ## After Project Generation
 
@@ -112,6 +110,7 @@ $ docker-compose up -d --build
 
 The frontend will be served as static files from the backend and will be exposed in the default port, **3000**. If you want to serve it in another port, you can change the port from the `.env` file.
 
+> [!WARNING]
 > ⚠️ **WARNING!** Before actually deploying it to the server, you need to change the database password both in the `.env` and `backend/.env` file.
 
 ## Tech Stacks
