@@ -1,5 +1,5 @@
 # **Dock-CD ⚡🐋**
-
+<a href="https://npmjs.com/package/vite"><img src="https://img.shields.io/npm/v/dock-cd.svg" alt="npm package"></a>
 ## **Docker Create & Deploy**
 
 > Dockerized Full Stack Web Application (frontend, backend, and database) Project Generator. Create and Deploy your Full Stack Web Application in minutes.
