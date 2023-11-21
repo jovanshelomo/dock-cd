@@ -1,6 +1,6 @@
 {
   "name": "dock-cd",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dockerized Full Stack Web Application Project Generator. Create and Deploy your Full Stack Web Application in minutes.",
   "main": "index.js",
   "type": "module",

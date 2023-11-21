@@ -10,8 +10,8 @@ if (process.env.NODE_ENV === "production") {
   server.register(fastifyStatic, {
     root: path.join(__dirname, "client"),
   });
-  server.get("/*", (request, reply) => {
-    reply.download(path.join(__dirname, "client", "index.html"));
+  server.setNotFoundHandler((request, reply) => {
+    reply.sendFile("index.html");
   });
 }
 
