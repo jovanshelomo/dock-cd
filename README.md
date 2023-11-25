@@ -29,7 +29,7 @@ You will be prompted to enter your project name and choose your tech stacks. The
 
 Example prompts:
 
-![image](https://github.com/jovanshelomo/dock-cd/assets/15062364/e0a8d9ff-830f-4c82-83c0-b124d7b57e2a)
+![image](https://github.com/jovanshelomo/dock-cd/assets/15062364/2bbb80b7-0a7e-44bc-9be2-8f7c7512af8b)
 
 If you wish to create example database data and connection, a little mock data for the database will be generated automatically and the code to connect to the database will be added to the backend.
 
