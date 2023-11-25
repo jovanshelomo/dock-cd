@@ -107,6 +107,11 @@ inquirer.prompt([
                 value: "mariadb"
             },
         ]
+    }, {
+        type: 'confirm',
+        name: 'example',
+        message: 'Create example database data and connection?',
+        default: true
     }
 ]).then(answers => {
     // check if project folder already exists
@@ -116,7 +121,7 @@ inquirer.prompt([
         return;
     }
 
-    logHelper.setTotalSteps(answers.typescript ? 17 : 15);
+    logHelper.setTotalSteps(17 + (answers.typescript ? 2 : 0) + (answers.example ? 1 : 0));
     logHelper.start();
 
     const worker = new Worker(moduleDir + "/worker.js", { workerData: { answers } })
@@ -129,9 +134,16 @@ inquirer.prompt([
             console.log("To start developing, run:")
             console.log(chalk.greenBright(`cd ${answers.projectName}`))
             console.log(chalk.greenBright(`docker-compose up db -d`))
+            if (answers.example) {
+                console.log(chalk.greenBright(`npm run prisma:pull`))
+            }
             console.log(chalk.greenBright(`npm i && npm run install-all && npm run dev`))
             console.log("\nTo deploy, run:")
             console.log(chalk.greenBright(`cd ${answers.projectName}`))
+            if (answers.example) {
+                console.log(chalk.greenBright(`npm run prisma:pull`))
+            }
+
             console.log(chalk.greenBright(`docker-compose up -d --build`))
             console.log("\nHappy deploying!")
         } else {

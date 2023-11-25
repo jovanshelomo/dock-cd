@@ -1,5 +1,5 @@
 version: "3.8"
-name: "my-project"
+name: ##PROJECTNAME##
 services:
   db:
     ##DATABASE##

@@ -26,21 +26,27 @@ const databaseProps = {
     port: "5432",
     host: "localhost",
     password: "your-super-secret-and-long-password",
-    prismaDataSourceName: "postgresql"
+    prismaDataSourceName: "postgresql",
+    initScript: "postgresql.sql",
+    connectionStringEnd: "postgres?schema=public"
   },
   mongodb: {
     user: "mongodb",
     port: "27017",
     host: "localhost",
     password: "your-super-secret-and-long-password",
-    prismaDataSourceName: "mongodb"
+    prismaDataSourceName: "mongodb",
+    initScript: "mongodb.js",
+    connectionStringEnd: "mydb?authSource=admin"
   },
   mariadb: {
-    user: "mariadb",
+    user: "root",
     port: "3306",
     host: "localhost",
     password: "your-super-secret-and-long-password",
-    prismaDataSourceName: "mysql"
+    prismaDataSourceName: "mysql",
+    initScript: "mariadb.sql",
+    connectionStringEnd: "mydb"
   },
 }
 
@@ -102,14 +108,12 @@ if (fs.existsSync(projectFolder)) {
     environment:
       POSTGRES_USER: \${DATABASE_USER}
       POSTGRES_PASSWORD: \${DATABASE_PASSWORD}
-      POSTGRES_DB: postgres
-      PGDATABASE: mydb
       PGPASSWORD: \${DATABASE_PASSWORD}
       POSTGRES_PORT: \${DATABASE_PORT}
       PGPORT: \${DATABASE_PORT}
     ports:
       - "\${DATABASE_PORT}:\${DATABASE_PORT}"
-    volumes:
+    volumes:${answers.example ? "\n      - ./init.sql:/docker-entrypoint-initdb.d/init.sql" : ""}
       - dockcd:/var/lib/postgresql/data
     restart: unless-stopped`,
 
@@ -118,30 +122,33 @@ if (fs.existsSync(projectFolder)) {
       MONGO_INITDB_ROOT_USERNAME: \${DATABASE_USER}
       MONGO_INITDB_ROOT_PASSWORD: \${DATABASE_PASSWORD}
       MONGO_PORT: \${DATABASE_PORT}
-      MONGO_INITDB_DATABASE: mydb
     ports:
       - "\${DATABASE_PORT}:\${DATABASE_PORT}"
-    volumes:
+    volumes:${answers.example ? "\n      - ./init.js:/docker-entrypoint-initdb.d/init.js" : ""}
       - dockcd:/data/db
     restart: unless-stopped`,
 
     mariadb: `image: mariadb:latest
     environment:
       MYSQL_ROOT_PASSWORD: \${DATABASE_PASSWORD}
-      MYSQL_DATABASE: mydb
-      MYSQL_USER: \${DATABASE_USER}
       MYSQL_PASSWORD: \${DATABASE_PASSWORD}
       MYSQL_PORT: \${DATABASE_PORT}
     ports:
       - "\${DATABASE_PORT}:\${DATABASE_PORT}"
-    volumes:
+    volumes:${answers.example ? "\n      - ./init.sql:/docker-entrypoint-initdb.d/init.sql" : ""}
       - dockcd:/var/lib/mysql
     restart: unless-stopped`
+  }
+
+  if (answers.example) {
+    parentPort.postMessage("Creating example database data...")
+    fs.copyFileSync(moduleDir + "/supports/database/" + databaseProps[answers.database].initScript, projectFolder + "/init." + databaseProps[answers.database].initScript.split(".")[1])
   }
 
   parentPort.postMessage("Creating docker-compose.yml...")
   let dockerComposeContent = fs.readFileSync(moduleDir + "/supports/docker-compose.yml", 'utf8')
   dockerComposeContent = dockerComposeContent.replace("##DATABASE##", dockerComposeDatabases[answers.database])
+  dockerComposeContent = dockerComposeContent.replace("##PROJECTNAME##", answers.projectName)
   fs.writeFileSync(projectFolder + "/docker-compose.yml", dockerComposeContent)
 
   // copy .env and change db user & port
@@ -159,8 +166,7 @@ if (fs.existsSync(projectFolder)) {
   })
   let dotenvPrismaContent = fs.readFileSync(backendFolder + "/.env", 'utf8');
   dotenvPrismaContent = dotenvPrismaContent.replace(/DATABASE_URL=.+/, `DATABASE_URL="${databaseProps[answers.database].prismaDataSourceName
-    }://${databaseProps[answers.database].user}:${databaseProps[answers.database].password}@${databaseProps[answers.database].host}:${databaseProps[answers.database].port}/mydb${answers.database === "postgresql" ? "?schema=public" : ""
-    }"`)
+    }://${databaseProps[answers.database].user}:${databaseProps[answers.database].password}@${databaseProps[answers.database].host}:${databaseProps[answers.database].port}/${databaseProps[answers.database].connectionStringEnd}"`)
   fs.writeFileSync(backendFolder + "/.env", dotenvPrismaContent)
 
   let prismaSchemaContent = fs.readFileSync(backendFolder + "/prisma/schema.prisma", 'utf8');
@@ -170,7 +176,7 @@ if (fs.existsSync(projectFolder)) {
 
   // copy index.js
   parentPort.postMessage("Creating backend index.js...")
-  fs.copyFileSync(moduleDir + `/supports/backend/index.${answers.backend}.${answers.typescript ? "ts" : "js"}`, backendFolder + `/index.${answers.typescript ? "ts" : "js"}`)
+  fs.copyFileSync(moduleDir + `/supports/backend/index.${answers.backend}${answers.example ? ".example" : ""}.${answers.typescript ? "ts" : "js"}`, backendFolder + `/index.${answers.typescript ? "ts" : "js"}`)
 
 
   // ROOT

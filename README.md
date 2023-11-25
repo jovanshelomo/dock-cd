@@ -1,5 +1,7 @@
 # **Dock-CD ⚡🐋**
+
 <a href="https://npmjs.com/package/dock-cd"><img src="https://img.shields.io/npm/v/dock-cd.svg" alt="npm package"></a>
+
 ## **Docker Create & Deploy**
 
 > Dockerized Full Stack Web Application (frontend, backend, and database) Project Generator. Create and Deploy your Full Stack Web Application in minutes.
@@ -27,8 +29,9 @@ You will be prompted to enter your project name and choose your tech stacks. The
 
 Example prompts:
 
- ![image](https://github.com/jovanshelomo/dock-cd/assets/15062364/e0a8d9ff-830f-4c82-83c0-b124d7b57e2a)
+![image](https://github.com/jovanshelomo/dock-cd/assets/15062364/e0a8d9ff-830f-4c82-83c0-b124d7b57e2a)
 
+If you wish to create example database data and connection, a little mock data for the database will be generated automatically and the code to connect to the database will be added to the backend.
 
 ## After Project Generation
 
@@ -122,9 +125,12 @@ The frontend will be served as static files from the backend and will be exposed
   - [MongoDB](https://www.mongodb.com/)
   - [MariaDB](https://mariadb.org/)
   - [PostgreSQL](https://www.postgresql.org/)
+- Database Connection
+  - [Prisma](https://www.prisma.io/) (thanks for providing the best ORM)
 - Containerization
   - [Docker](https://www.docker.com/)
   - [Docker Compose](https://docs.docker.com/compose/)
 
 ---
+
 Made with ♥️ By Jovan Shelomo

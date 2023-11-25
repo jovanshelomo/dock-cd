@@ -35,6 +35,15 @@ const init = async () => {
         }
     });
 
+    server.route({
+        method: 'GET',
+        path: '/api/users',
+        handler: async (request, h) => {
+            const data = await prisma.users.findMany();
+            return data;
+        }
+    })
+
     //serve static assets if in production
     if (process.env.NODE_ENV === 'production') {
         console.log("serving static file for production use");

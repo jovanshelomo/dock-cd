@@ -1,6 +1,7 @@
 import fastify from "fastify";
 import path from "path";
 import fastifyStatic from "@fastify/static";
+import prisma from "./prisma";
 
 const server = fastify();
 
@@ -15,8 +16,13 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-server.get("/test", async (request, reply) => {
+server.get("/api/test", async (request, reply) => {
   return "Hello World!";
+});
+
+server.get("/api/users", async (request, reply) => {
+  const data = await prisma.users.findMany();
+  return data;
 });
 
 server.listen({ port: 3000 }, (err, address) => {

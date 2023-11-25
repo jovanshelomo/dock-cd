@@ -21,6 +21,11 @@ app.get("/api/test", (req, res) => {
   res.send("Hello World!");
 });
 
+app.get("/api/users", async (req, res) => {
+  const data = await prisma.users.findMany();
+  res.json(data);
+});
+
 //serve static assets if in production
 if (process.env.NODE_ENV === "production") {
   console.log("serving static file for production use");
